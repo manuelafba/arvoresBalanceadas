@@ -22,4 +22,6 @@ int fatorBalanceamento(TreeNode* no);
 TreeNode* rotacaoDireita(TreeNode* noDesbalanceado);
 TreeNode* rotacaoEsquerda(TreeNode* noDesbalanceado);
 TreeNode* insere(TreeNode* no, int chave);
+TreeNode* pesquisa(TreeNode* no, int chave);
+void exibirArvore(TreeNode* no);
 void liberaArvore(TreeNode* no);

@@ -1,6 +1,6 @@
-#include "arvoreAVL.h" 
-#include <cstdlib> 
-#include <iostream> 
+#include "arvoreAVL.h"
+#include <cstdlib>
+#include <iostream>
 
 // Função auxiliar para retornar o maior valor entre dois inteiros
 int maiorValor(int a, int b) {
@@ -110,6 +110,29 @@ TreeNode* insere(TreeNode* no, int chave) {
     }
 
     return no; // Retorna o nó atualizado
+}
+
+TreeNode* pesquisa(TreeNode* no, int chave) {
+    // Se a árvore está vazia ou o nó atual for o que estamos buscando
+    if (no == NULL || no->chave == chave) {
+        return no;
+    }
+
+    // Se a chave for menor, procura na subárvore esquerda
+    if (chave < no->chave) {
+        return pesquisa(no->esquerda, chave);
+    }
+    
+    // Se a chave for maior, procura na subárvore direita
+    return pesquisa(no->direita, chave);
+}
+
+void exibirArvore(TreeNode* no) {
+    if (no != NULL) {
+        exibirArvore(no->esquerda); // Exibe a subárvore esquerda
+        cout << no->chave << " "; // Exibe a chave do nó atual
+        exibirArvore(no->direita); // Exibe a subárvore direita
+    }
 }
 
 void liberaArvore(TreeNode* no) {
