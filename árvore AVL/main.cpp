@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
     TreeNode* raiz = NULL; // Inicializa a raiz como nula
-    int opcao = 0;         // Variável para armazenar a opção do menu
+    int opcao = 0; // Variável para armazenar a opção escolhida 
 
     while (true) { // Laço principal
         // Exibição do menu
