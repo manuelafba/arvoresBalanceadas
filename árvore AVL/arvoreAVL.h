@@ -13,3 +13,13 @@ struct Node {
 };
 
 typedef TreeNode* AVLTree;
+
+// Cabeçalhos das funções
+int maiorValor(int a, int b);
+int alturaArvore(TreeNode* no);
+TreeNode* criaNo(int chave);
+int fatorBalanceamento(TreeNode* no);
+TreeNode* rotacaoDireita(TreeNode* noDesbalanceado);
+TreeNode* rotacaoEsquerda(TreeNode* noDesbalanceado);
+TreeNode* insere(TreeNode* no, int chave);
+void liberaArvore(TreeNode* no);

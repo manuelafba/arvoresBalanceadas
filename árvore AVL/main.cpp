@@ -1,3 +1,4 @@
+// Aluna: Manuela Formigosa Balieiro de Araújo
 #include <iostream>
 #include "arvoreAVL.h"
 using namespace std;
