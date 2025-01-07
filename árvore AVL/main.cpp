@@ -3,7 +3,7 @@
 #include "arvoreAVL.h"
 using namespace std;
 
-int mainAVL() {
+int main() {
     TreeNode* raiz = NULL; // Inicializa a raiz como nula
     int opcao = 0; // Variável para armazenar a opção do menu
 
