@@ -257,12 +257,3 @@ void mostrararvore(TreeNode* raiz) {
     }
     cout << endl;
 }
-
-
-void liberaArvore(TreeNode* no) {
-    if (no != NULL) {
-        liberaArvore(no->esquerda); // Libera a subárvore esquerda
-        liberaArvore(no->direita); // Libera a subárvore direita
-        free(no); // Libera a memória do nó atual
-    }
-}
