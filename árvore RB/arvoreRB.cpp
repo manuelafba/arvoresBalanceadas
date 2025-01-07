@@ -326,14 +326,12 @@ NoRB* pesquisar(NoRB* raiz, int valor) {
 }
 
 void mostrarArvore(NoRB* raiz) {
-    // Pilha para armazenar os nós à medida que percorremos a árvore
     stack<NoRB*> pilhaGlobal;
     pilhaGlobal.push(raiz);
-    int nVazios = 32;  // Controla a quantidade de espaços em cada nível da árvore
+    int nVazios = 32;  
     bool linhaVazia = false;
     cout << endl;
 
-    // Enquanto a árvore não estiver completamente exibida (quando todos os nós forem visitados)
     while (!linhaVazia) {
         stack<NoRB*> pilhaLocal;
         linhaVazia = true;
@@ -342,39 +340,32 @@ void mostrarArvore(NoRB* raiz) {
         for (int j = 0; j < nVazios; j++) {
             cout << ' ';
         }
-
-        // Processa os nós de cada nível da árvore
+        
         while (!pilhaGlobal.empty()) {
             NoRB* temp = pilhaGlobal.top();
             pilhaGlobal.pop();
 
             if (temp != nullptr) {
-                // Exibe o valor e a cor do nó
                 cout << temp->chave << "(" << (temp->cor == VERMELHO ? "Vermelho" : "Preto") << ")";
-                // Adiciona os filhos à pilha local
                 pilhaLocal.push(temp->esquerda);
                 pilhaLocal.push(temp->direita);
 
-                // Verifica se há filhos para continuar percorrendo
                 if (temp->esquerda != nullptr || temp->direita != nullptr) {
                     linhaVazia = false;
                 }
             } else {
-                // No nulo (não existe nó)
                 cout << "--";
                 pilhaLocal.push(nullptr);
                 pilhaLocal.push(nullptr);
             }
 
-            // Controla os espaços entre os nós
             for (int j = 0; j < nVazios * 2 - 2; j++) {
                 cout << ' ';
             }
         }
         cout << endl;
         nVazios = nVazios / 2;
-
-        // Transferir os nós da pilha local para a pilha global
+        
         while (!pilhaLocal.empty()) {
             pilhaGlobal.push(pilhaLocal.top());
             pilhaLocal.pop();
