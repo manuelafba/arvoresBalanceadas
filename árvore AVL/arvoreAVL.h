@@ -23,6 +23,5 @@ TreeNode* insere(TreeNode* no, int chave);
 TreeNode* pesquisa(TreeNode* no, int chave);
 TreeNode* remover(TreeNode* raiz, int chave);
 void mostrararvore(TreeNode* raiz);
-void liberaArvore(TreeNode* no);
 
 #endif // ARVOREAVL_H
