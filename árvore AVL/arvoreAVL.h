@@ -1,7 +1,5 @@
-#include <iostream>
-#include <cstdlib>
-
-using namespace std;
+#ifndef ARVOREAVL_H
+#define ARVOREAVL_H
 
 typedef struct Node TreeNode;
 
@@ -23,5 +21,8 @@ TreeNode* rotacaoDireita(TreeNode* noDesbalanceado);
 TreeNode* rotacaoEsquerda(TreeNode* noDesbalanceado);
 TreeNode* insere(TreeNode* no, int chave);
 TreeNode* pesquisa(TreeNode* no, int chave);
-void exibirArvore(TreeNode* no);
+TreeNode* remover(TreeNode* raiz, int chave);
+void mostrararvore(TreeNode* raiz);
 void liberaArvore(TreeNode* no);
+
+#endif // ARVOREAVL_H

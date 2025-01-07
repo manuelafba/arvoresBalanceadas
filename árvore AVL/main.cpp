@@ -3,13 +3,13 @@
 #include "arvoreAVL.h"
 using namespace std;
 
-int main() {
+int mainAVL() {
     TreeNode* raiz = NULL; // Inicializa a raiz como nula
     int opcao = 0; // Variável para armazenar a opção do menu
 
     while (true) {  // Laço principal
         // Exibição do menu
-        cout << "--- Menu ---" << endl;
+        cout << "--- Menu Arvore AVL ---" << endl;
         cout << "1. Inserir elemento" << endl;
         cout << "2. Remover elemento" << endl;
         cout << "3. Pesquisar elemento" << endl;
@@ -28,7 +28,7 @@ int main() {
                 int valor;
                 cout << "Digite o valor a ser inserido: ";
                 cin >> valor;
-                raiz = insere(raiz, valor);  // Insere o elemento na árvore
+                raiz = insere(raiz, valor); 
                 cout << "Valor " << valor << " inserido na arvore com sucesso" << endl;
                 break;
             }
@@ -36,7 +36,7 @@ int main() {
                 int valor;
                 cout << "Digite o valor a ser removido: ";
                 cin >> valor;
-                raiz = remover(raiz, valor);  // Remove o elemento da árvore
+                raiz = remover(raiz, valor);  
                 cout << "Valor " << valor << " removido da arvore com sucesso" << endl;
                 break;
             }
@@ -44,7 +44,7 @@ int main() {
                 int valor;
                 cout << "Digite o valor a ser pesquisado: ";
                 cin >> valor;
-                if (pesquisar(raiz, valor)) {  // Pesquisa o valor na árvore
+                if (pesquisa(raiz, valor)) { 
                     cout << "Valor " << valor << " encontrado na arvore" << endl;
                 } else {
                     cout << "Valor " << valor << " nao encontrado na arvore" << endl;
@@ -52,9 +52,8 @@ int main() {
                 break;
             }
             case 4: {
-                cout << "Exibindo a arvore em ordem: ";
-                exibirArvore(raiz);  // Exibe os valores da árvore em ordem
-                cout << endl;
+                cout << "Exibindo a arvore AVL:" << endl;
+                mostrararvore(raiz);  
                 break;
             }
             default:

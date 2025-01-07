@@ -1,6 +1,8 @@
-#include "arvoreAVL.h"
 #include <cstdlib>
 #include <iostream>
+#include <stack>
+#include "arvoreAVL.h"
+using namespace std;
 
 // Função auxiliar para retornar o maior valor entre dois inteiros
 int maiorValor(int a, int b) {
@@ -122,18 +124,140 @@ TreeNode* pesquisa(TreeNode* no, int chave) {
     if (chave < no->chave) {
         return pesquisa(no->esquerda, chave);
     }
-    
+
     // Se a chave for maior, procura na subárvore direita
     return pesquisa(no->direita, chave);
 }
 
-void exibirArvore(TreeNode* no) {
-    if (no != NULL) {
-        exibirArvore(no->esquerda); // Exibe a subárvore esquerda
-        cout << no->chave << " "; // Exibe a chave do nó atual
-        exibirArvore(no->direita); // Exibe a subárvore direita
+TreeNode* remover(TreeNode* raiz, int chave) {
+    // Passo 1: Realizar a remoção padrão de uma árvore binária de busca
+    if (raiz == NULL) {
+        return raiz; // Se a árvore estiver vazia, retorna NULL
     }
+
+    if (chave < raiz->chave) {
+        // A chave está na subárvore esquerda
+        raiz->esquerda = remover(raiz->esquerda, chave);
+    } else if (chave > raiz->chave) {
+        // A chave está na subárvore direita
+        raiz->direita = remover(raiz->direita, chave);
+    } else {
+        // Encontrou o nó a ser removido
+        if ((raiz->esquerda == NULL) || (raiz->direita == NULL)) {
+            // Nó com um filho ou nenhum filho
+            TreeNode* temp = raiz->esquerda ? raiz->esquerda : raiz->direita;
+
+            if (temp == NULL) {
+                // Sem filhos
+                temp = raiz;
+                raiz = NULL;
+            } else {
+                // Um filho
+                *raiz = *temp; // Copia os dados do filho para o nó atual
+            }
+            free(temp); // Libera o nó
+        } else {
+            // Nó com dois filhos: obter o menor na subárvore direita
+            TreeNode* temp = raiz->direita;
+            while (temp->esquerda != NULL) {
+                temp = temp->esquerda;
+            }
+
+            // Copiar o valor do sucessor para o nó
+            raiz->chave = temp->chave;
+
+            // Remover o sucessor 
+            raiz->direita = remover(raiz->direita, temp->chave);
+        }
+    }
+
+    // Se a árvore tinha apenas um nó
+    if (raiz == NULL) {
+        return raiz;
+    }
+
+    // Passo 2: Atualizar a altura do nó atual
+    raiz->altura = maiorValor(alturaArvore(raiz->esquerda), alturaArvore(raiz->direita)) + 1;
+
+    // Passo 3: Verificar o balanceamento do nó atual
+    int balance = fatorBalanceamento(raiz);
+
+    // Caso 1: Desbalanceamento à esquerda (rotação à direita necessária)
+    if (balance > 1 && fatorBalanceamento(raiz->esquerda) >= 0) {
+        return rotacaoDireita(raiz);
+    }
+
+    // Caso 2: Desbalanceamento à esquerda com subárvore direita maior (rotação dupla necessária)
+    if (balance > 1 && fatorBalanceamento(raiz->esquerda) < 0) {
+        raiz->esquerda = rotacaoEsquerda(raiz->esquerda);
+        return rotacaoDireita(raiz);
+    }
+
+    // Caso 3: Desbalanceamento à direita (rotação à esquerda necessária)
+    if (balance < -1 && fatorBalanceamento(raiz->direita) <= 0) {
+        return rotacaoEsquerda(raiz);
+    }
+
+    // Caso 4: Desbalanceamento à direita com subárvore esquerda maior (rotação dupla necessária)
+    if (balance < -1 && fatorBalanceamento(raiz->direita) > 0) {
+        raiz->direita = rotacaoDireita(raiz->direita);
+        return rotacaoEsquerda(raiz);
+    }
+
+    return raiz; // Retorna o nó atualizado
 }
+
+void mostrararvore(TreeNode* raiz) {
+    if (raiz == NULL) {
+        cout << "Árvore vazia." << endl;
+        return;
+    }
+
+    stack<TreeNode*> pilhaGlobal;
+    pilhaGlobal.push(raiz);
+    int nVazios = 32; // Ajusta o espaçamento inicial
+    bool linhaVazia = false;
+
+    cout << endl;
+    while (!linhaVazia) {
+        stack<TreeNode*> pilhaLocal;
+        linhaVazia = true;
+
+        for (int j = 0; j < nVazios; j++)
+            cout << ' ';
+
+        while (!pilhaGlobal.empty()) {
+            TreeNode* temp = pilhaGlobal.top();
+            pilhaGlobal.pop();
+
+            if (temp != NULL) {
+                cout << temp->chave;
+                pilhaLocal.push(temp->esquerda);
+                pilhaLocal.push(temp->direita);
+
+                if (temp->esquerda != NULL || temp->direita != NULL)
+                    linhaVazia = false;
+            } else {
+                cout << "--";
+                pilhaLocal.push(NULL);
+                pilhaLocal.push(NULL);
+            }
+
+            for (int j = 0; j < nVazios * 2 - 2; j++)
+                cout << ' ';
+        }
+
+        cout << endl;
+        nVazios /= 2;
+
+        while (!pilhaLocal.empty()) {
+            pilhaGlobal.push(pilhaLocal.top());
+            pilhaLocal.pop();
+        }
+    }
+    cout << endl;
+}
+
 
 void liberaArvore(TreeNode* no) {
     if (no != NULL) {
