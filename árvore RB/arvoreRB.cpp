@@ -1,4 +1,5 @@
 #include "arvoreRB.h"
+#include "colors.hpp"
 #include <iostream>
 #include <stack>
 using namespace std;
@@ -340,19 +341,24 @@ void mostrarArvore(NoRB* raiz) {
         for (int j = 0; j < nVazios; j++) {
             cout << ' ';
         }
-        
+
         while (!pilhaGlobal.empty()) {
             NoRB* temp = pilhaGlobal.top();
             pilhaGlobal.pop();
 
-            if (temp != nullptr) {
-                cout << temp->chave << "(" << (temp->cor == VERMELHO ? "Vermelho" : "Preto") << ")";
+                if (temp != nullptr) {
+                    // Configura a cor do nó com base no seu valor
+                    if (temp->cor == VERMELHO) {
+                        cout << hey::red << (temp->chave) << "(Vermelho)" << hey::off;
+                    } else {
+                        cout << hey::gray << (temp->chave) << "(Preto)" << hey::off;
+                    }
+                }
                 pilhaLocal.push(temp->esquerda);
                 pilhaLocal.push(temp->direita);
 
                 if (temp->esquerda != nullptr || temp->direita != nullptr) {
                     linhaVazia = false;
-                }
             } else {
                 cout << "--";
                 pilhaLocal.push(nullptr);
@@ -365,7 +371,7 @@ void mostrarArvore(NoRB* raiz) {
         }
         cout << endl;
         nVazios = nVazios / 2;
-        
+
         while (!pilhaLocal.empty()) {
             pilhaGlobal.push(pilhaLocal.top());
             pilhaLocal.pop();
